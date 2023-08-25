@@ -16,8 +16,6 @@ polars = { version = "0.32.1", features = [
     "dtype-datetime",
     "ndarray",
 ] }
-serde = "1.0.186"
-serde_json = "1.0.105"
 time = "0.3.27"
 tokio-test = "0.4.3"
 yahoo_finance_api = "2.0.1"

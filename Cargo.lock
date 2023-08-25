@@ -1805,8 +1805,6 @@ version = "0.1.0"
 dependencies = [
  "ndarray",
  "polars",
- "serde",
- "serde_json",
  "time",
  "tokio-test",
  "yahoo_finance_api",
