@@ -6,16 +6,17 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-ndarray = "0.15.6"
-polars = { version = "0.32.1", features = [
-    "lazy",
-    "temporal",
-    "describe",
-    "json",
-    "parquet",
-    "dtype-datetime",
-    "ndarray",
-] }
+# ndarray = "0.15.6"
+# polars = { version = "0.32.1", features = [
+#     "lazy",
+#     "temporal",
+#     "describe",
+#     "json",
+#     "parquet",
+#     "dtype-datetime",
+#     "ndarray",
+# ] }
+polyfit-rs = "0.2.1"
 time = "0.3.27"
 tokio-test = "0.4.3"
 yahoo_finance_api = "2.0.1"
