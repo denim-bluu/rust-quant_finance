@@ -1,3 +1,5 @@
+use nalgebra as na;
+
 pub fn mean(x: &[f64]) -> f64 {
     let sum: f64 = x.iter().sum();
     let n: f64 = x.len() as f64;
@@ -61,4 +63,22 @@ pub fn array_max(x: &Vec<f64>) -> f64 {
 }
 pub fn array_min(x: &Vec<f64>) -> f64 {
     x.iter().fold(x[0], |acc, &x| acc.min(x))
+}
+
+pub fn calculate_ols_coefficients<T: na::RealField + Copy>(
+    x_data: Vec<Vec<T>>,
+    y_data: Vec<T>,
+) -> Result<Vec<T>, &'static str> {
+    let x_mat = na::DMatrix::from_fn(x_data.len(), x_data[0].len(), |i, j| x_data[i][j]);
+    let y_vec = na::DVector::from_vec(y_data);
+
+    let results = lstsq::lstsq(&x_mat, &y_vec, na::convert(1e-18f64)).unwrap();
+    println!("{:#?}", results.solution[0]);
+    println!("{:#?}", results.solution[1]);
+    let decomp = na::SVD::new(x_mat.clone(), true, true);
+
+    match decomp.solve(&y_vec, na::convert(1e-18f64)) {
+        Ok(mat) => Ok(mat.data.into()),
+        Err(error) => Err(error),
+    }
 }

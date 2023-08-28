@@ -3,9 +3,22 @@ use time::macros::datetime;
 mod data;
 mod hurst_exponent;
 mod math;
+mod trading;
 
 fn main() {
-    hurst_example();
+    let start = datetime!(2006-5-24 0:00:00.00 UTC);
+    let end = datetime!(2012-4-9 0:00:00.00 UTC);
+    let uso: Vec<f64> = data::get_history("USO", start, end)
+        .iter()
+        .map(|q| q.adjclose)
+        .collect();
+    let gld: Vec<f64> = data::get_history("GLD", start, end)
+        .iter()
+        .map(|q| q.adjclose)
+        .collect();
+    let pairs = trading::AssetPairs::new(uso, gld).unwrap();
+    println!("{:#?}", pairs.simple_linear_mean_reversion_strategy(20))
+    // hurst_example();
 }
 
 fn hurst_example() {
