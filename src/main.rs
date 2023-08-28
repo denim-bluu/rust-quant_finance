@@ -16,8 +16,8 @@ fn main() {
         .iter()
         .map(|q| q.adjclose)
         .collect();
-    let pairs = trading::AssetPairs::new(uso, gld).unwrap();
-    println!("{:#?}", pairs.simple_linear_mean_reversion_strategy(20))
+    let pairs = trading::AssetPairs::new(gld, uso).unwrap();
+    let x = pairs.calculate_hedge_ratio(20);
     // hurst_example();
 }
 
@@ -30,4 +30,19 @@ fn hurst_example() {
     let ret = math::calculate_daily_returns(&q_vec);
     let hurst_exp = hurst_exponent::calcualte_hurst_exp(&ret);
     println!("Hurst Exponent: {:#?}", hurst_exp);
+}
+fn simple_linear_mean_reversion_strategy_example() {
+    let start = datetime!(2006-5-24 0:00:00.00 UTC);
+    let end = datetime!(2012-4-9 0:00:00.00 UTC);
+    let uso: Vec<f64> = data::get_history("USO", start, end)
+        .iter()
+        .map(|q| q.adjclose)
+        .collect();
+    let gld: Vec<f64> = data::get_history("GLD", start, end)
+        .iter()
+        .map(|q| q.adjclose)
+        .collect();
+    let pairs = trading::AssetPairs::new(gld, uso).unwrap();
+    let hedge_ratios = pairs.calculate_hedge_ratio(20);
+    println!("{:#?}", hedge_ratios);
 }
