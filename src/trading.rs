@@ -1,6 +1,5 @@
 use crate::math;
 use nalgebra as na;
-use polyfit_rs::polyfit_rs;
 
 #[derive(Debug, Clone)]
 pub struct AssetPairs {

@@ -4,6 +4,7 @@ mod data;
 mod hurst_exponent;
 mod math;
 mod trading;
+mod vis;
 
 fn main() {
     let start = datetime!(2006-5-24 0:00:00.00 UTC);
@@ -17,8 +18,8 @@ fn main() {
         .map(|q| q.adjclose)
         .collect();
     let pairs = trading::AssetPairs::new(gld, uso).unwrap();
-    let x = pairs.calculate_hedge_ratio(20);
-    // hurst_example();
+    let hedge_ratios = pairs.calculate_hedge_ratio(20);
+    vis::draw_line_chart("Test", &hedge_ratios);
 }
 
 fn hurst_example() {
