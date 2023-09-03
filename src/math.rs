@@ -34,17 +34,18 @@ pub fn calculate_rolling_mean(x: &Vec<f64>, window: usize) -> Vec<f64> {
 }
 
 pub fn calculate_rolling_std(x: &Vec<f64>, window: usize, ddof: Option<f64>) -> Vec<f64> {
-    const DDOF: f64 = 1.0;
     let mut roll_std = Vec::new();
 
     for i in 0..x.len() {
         if i < window {
-            roll_std.push(standard_deviation(&x[..=i], DDOF));
+            roll_std.push(standard_deviation(&x[..=i], ddof.unwrap_or(1.0)));
         } else {
-            roll_std.push(standard_deviation(&x[i - window + 1..=i], DDOF));
+            roll_std.push(standard_deviation(
+                &x[i - window + 1..=i],
+                ddof.unwrap_or(1.0),
+            ));
         }
     }
-
     roll_std
 }
 
